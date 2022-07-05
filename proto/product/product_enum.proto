@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package product;
+
+option go_package = "proto/product";
+
+enum Role {
+    ADMIN = 0;
+    USER = 1;
+}
+
+enum Status {
+    PENDING = 0;
+    REJECTED = 1;
+    ACCEPTED = 2;
+}

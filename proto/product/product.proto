@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package product;
+
+option go_package = "proto/product";
+
+import "product/product_enum.proto";
+
+message SaveRequestedGiftRequest {
+    string adminId = 1;
+    string fullname = 2;
+    string username  = 3;
+    string userId = 4;
+    string productname = 5;
+    string url = 6;
+}
+
+message SaveRequestedGiftResponse {
+    int64 status = 1;
+    string error = 2;
+}
+
+message UpdateProductStatusRequest {
+    Role role = 1;
+    Status status = 2;
+    repeated string productIds = 3;
+    string userId = 4;
+}
+
+message UpdateProductStatusResponse {
+    int64 status = 1;
+    string error = 2;
+}
+
+message Product {
+    string adminId = 1;
+    string fullname = 2;
+    string username = 3;
+    string userId = 4;
+    string requestDate = 5;
+    Status status = 6;
+    string productName = 7;
+    string url = 8;
+}
+
+message GetAllProductsRequest {
+    Role role = 1;
+    string id = 2;
+    Status status = 3;
+}
+
+message GetAllProductsResponse {
+    int64 status = 1;
+    string error = 2;
+    repeated Product products = 3;
+}
