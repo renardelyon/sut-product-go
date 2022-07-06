@@ -10,4 +10,5 @@ service ProductService {
     rpc SaveRequestedGift(SaveRequestedGiftRequest) returns (SaveRequestedGiftResponse) {}
     rpc UpdateProductStatus(UpdateProductStatusRequest) returns (UpdateProductStatusResponse) {}
     rpc GetAllProducts(GetAllProductsRequest) returns (GetAllProductsResponse) {}
+    rpc DeleteProducts(DeleteProductsRequest) returns (DeleteProductsResponse)
 }

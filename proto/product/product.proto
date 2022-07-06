@@ -54,3 +54,12 @@ message GetAllProductsResponse {
     string error = 2;
     repeated Product products = 3;
 }
+
+message DeleteProductsRequest {
+    repeated string productIds = 1;
+}
+
+message DeleteProductsResponse {
+    int64 status = 1;
+    string error = 2;
+}
