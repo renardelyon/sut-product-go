@@ -57,6 +57,7 @@ message GetAllProductsResponse {
 
 message DeleteProductsRequest {
     repeated string productIds = 1;
+    string userId = 2;
 }
 
 message DeleteProductsResponse {
