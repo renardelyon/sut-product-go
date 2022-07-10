@@ -20,6 +20,24 @@ message SaveRequestedGiftResponse {
     string error = 2;
 }
 
+message ProductInfo {
+    string productname = 1;
+    string url = 2;
+}
+
+message SaveRequestedGiftBulkRequest {
+    string adminId = 1;
+    string fullname = 2;
+    string username  = 3;
+    string userId = 4;
+    repeated ProductInfo productInfo = 5;
+}
+
+message SaveRequestedGiftBulkResponse {
+    int64 status = 1;
+    string error = 2;
+}
+
 message UpdateProductStatusRequest {
     Role role = 1;
     Status status = 2;

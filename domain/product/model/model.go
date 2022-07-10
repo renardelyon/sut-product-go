@@ -24,6 +24,3 @@ type Product struct {
 	Name string
 	Url  string
 }
-
-type ProductInfo struct {
-}
