@@ -19,29 +19,27 @@ func (s *Service) UpdateProductStatus(ctx context.Context, reqUpdate *productpb.
 		}, nil
 	}
 
-	//TODO: Notification service
-
 	chanTx := make(chan *gorm.DB)
-	dBCollection := make([]*gorm.DB, len(reqUpdate.ProductIds))
+	dBCollection := make([]*gorm.DB, len(reqUpdate.UserProducts))
 
 	var errMessage = ""
 	var wg sync.WaitGroup
 	var mtx sync.Mutex
 
-	wg.Add(len(reqUpdate.ProductIds))
+	wg.Add(50)
 
-	for _, productId := range reqUpdate.ProductIds {
-		go func(productId string) {
+	for _, userProduct := range reqUpdate.UserProducts {
+		go func(up *productpb.UserAndProduct) {
 			mtx.Lock()
 			res := s.H.DB.Model(&model.UserProduct{}).
-				Where(&model.UserProduct{ProductId: productId, UserId: reqUpdate.UserId}).
+				Where(&model.UserProduct{ProductId: up.ProductId, UserId: up.UserId}).
 				Update("status", strings.ToLower(reqUpdate.Status.String()))
 			mtx.Unlock()
 
 			chanTx <- res
 
 			wg.Done()
-		}(productId)
+		}(userProduct)
 	}
 
 	go func() {
@@ -66,6 +64,8 @@ func (s *Service) UpdateProductStatus(ctx context.Context, reqUpdate *productpb.
 			Error:  errMessage,
 		}, nil
 	}
+
+	//TODO: Notification service
 
 	return &productpb.UpdateProductStatusResponse{
 		Status: http.StatusOK,

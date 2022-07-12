@@ -38,11 +38,15 @@ message SaveRequestedGiftBulkResponse {
     string error = 2;
 }
 
+message UserAndProduct {
+    string userId = 1;
+    string productId = 2;
+}
+
 message UpdateProductStatusRequest {
     Role role = 1;
     Status status = 2;
-    repeated string productIds = 3;
-    string userId = 4;
+    repeated UserAndProduct userProducts = 3;
 }
 
 message UpdateProductStatusResponse {
