@@ -62,14 +62,14 @@ func initGrpcClient(cfg *config.Config) func(*Application) error {
 	return func(app *Application) error {
 		app.GrpcClients = make(map[string]*grpc.ClientConn)
 
-		// ProductServiceCfg := cfg.ProductHost
-		// conn, err := setupGrpcConnection(ProductServiceCfg)
-		// if err != nil {
-		// 	return err
-		// }
+		notifServiceCfg := cfg.NotifHost
+		conn, err := setupGrpcConnection(notifServiceCfg)
+		if err != nil {
+			return err
+		}
 
-		// app.GrpcClients["product-management-service"] = conn
-		// log.Println("product-management-service" + " connected on " + ProductServiceCfg)
+		app.GrpcClients["notification-service"] = conn
+		log.Println("notification-service" + " connected on " + notifServiceCfg)
 
 		log.Println("init Grpc Client done")
 		return nil
