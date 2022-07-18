@@ -34,6 +34,7 @@ func (s *Service) SaveRequestedGift(ctx context.Context, reqSave *productpb.Save
 
 	var products []model.Product
 
+	// query data that specific user id(user_product) has by productname in different table(products)
 	query := fmt.Sprintf(`
 		select *
 		from user_products up
