@@ -78,8 +78,7 @@ message GetAllProductsResponse {
 }
 
 message DeleteProductsRequest {
-    repeated string productIds = 1;
-    string userId = 2;
+    repeated UserAndProduct userAndProductsIds = 3;
 }
 
 message DeleteProductsResponse {

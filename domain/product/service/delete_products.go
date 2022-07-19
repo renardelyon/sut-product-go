@@ -12,26 +12,26 @@ import (
 
 func (s *Service) DeleteProducts(ctx context.Context, reqDel *productpb.DeleteProductsRequest) (*productpb.DeleteProductsResponse, error) {
 	chanTx := make(chan *gorm.DB)
-	dBCollection := make([]*gorm.DB, len(reqDel.ProductIds))
+	dBCollection := make([]*gorm.DB, len(reqDel.UserAndProductsIds))
 
 	var errMessage = ""
 	var wg sync.WaitGroup
 	var mtx sync.Mutex
 
-	wg.Add(len(reqDel.ProductIds))
+	wg.Add(len(reqDel.UserAndProductsIds))
 
-	for _, productId := range reqDel.ProductIds {
-		go func(productId string) {
+	for _, UserAndProductsId := range reqDel.UserAndProductsIds {
+		go func(UserAndProductId *productpb.UserAndProduct) {
 			mtx.Lock()
 			res := s.H.DB.Model(&model.UserProduct{}).
-				Where(&model.UserProduct{ProductId: productId, UserId: reqDel.UserId}).
+				Where(&model.UserProduct{ProductId: UserAndProductId.ProductId, UserId: UserAndProductId.UserId}).
 				Delete(&model.UserProduct{})
 			mtx.Unlock()
 
 			chanTx <- res
 
 			wg.Done()
-		}(productId)
+		}(UserAndProductsId)
 	}
 
 	go func() {
