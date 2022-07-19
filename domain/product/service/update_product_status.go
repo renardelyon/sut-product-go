@@ -30,7 +30,7 @@ func (s *Service) UpdateProductStatus(ctx context.Context, reqUpdate *productpb.
 	var wg sync.WaitGroup
 	var mtx sync.Mutex
 
-	wg.Add(50)
+	wg.Add(len(reqUpdate.UserProducts))
 
 	statusQtyMap := make(statusQtyByUserId)
 
@@ -41,13 +41,13 @@ func (s *Service) UpdateProductStatus(ctx context.Context, reqUpdate *productpb.
 				Where(&model.UserProduct{ProductId: up.ProductId, UserId: up.UserId}).
 				Update("status", strings.ToLower(reqUpdate.Status.String()))
 
-			if _, ok := statusQtyMap[up.UserId]; ok {
+			if _, ok := statusQtyMap[up.UserId]; !ok {
 				statusQtyMap[up.UserId] = &notifpb.StatusQty{
 					Status:   reqUpdate.Status.String(),
-					Quantity: 0,
+					Quantity: 1,
 				}
 			} else {
-				statusQtyMap[up.UserId].Quantity += 1
+				statusQtyMap[up.UserId].Quantity = statusQtyMap[up.UserId].Quantity + 1
 			}
 			mtx.Unlock()
 
