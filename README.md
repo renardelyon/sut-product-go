@@ -5,8 +5,8 @@ Microservice for managing user requested product
 
 1. Create file env and name it `dev.env`. its content can be seen in code block below. 
 ```
-PORT=
-NOTIF_HOST=
+PORT=:50054
+NOTIF_HOST=:50055
 DB_URL=
 ```
 
