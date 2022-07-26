@@ -32,3 +32,8 @@ make proto-gen
 ```
 make run
 ```
+## How to run in local?
+```
+docker build --tag=sut/product-service --build-arg SERVICE=sut-product-go --build-arg PORT=50054 .
+docker run -p 50054:50054 <IMAGE_ID>
+```
